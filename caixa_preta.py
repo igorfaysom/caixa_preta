@@ -82,18 +82,18 @@ def cruzamento(ind1, ind2):
   return { 'individuo': genes_filho, 'fitness': 0}       
   
   def cruzamento_unicorte(ind1, ind2):
-  genes_filho = []
+  genes_filho1 = []
 
   n = len( ind1['individuo'] )
   
   p = random.randint(0, n-1)
   for i in range( n ):
     if i <= p:
-      genes_filho.append( ind1['individuo'][i])
+      genes_filho1.append( ind1['individuo'][i])
     else:
-      genes_filho.append(ind2['individuo'][i])   
+      genes_filho1.append(ind2['individuo'][i])   
 
-  return { 'individuo': genes_filho, 'fitness': 0}
+  return { 'individuo': genes_filho1, 'fitness': 0}
 
 
 pop = gerarPopulacao(3)
