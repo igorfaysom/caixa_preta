@@ -39,21 +39,31 @@ def avalicao(pop):
     + int(aci_nuc[24]) *  int(aci_nuc[18]) + int(aci_nuc[6]) *  int(aci_nuc[7]) 
     +  int(aci_nuc[8]) * int(aci_nuc[17]) + int(aci_nuc[0]) *  int(aci_nuc[32]))  
     pop[i]['fitness'] = expressao
-def selecao(pop:list):
-  
-  pop_ord = sorted(pop,key=itemgetter('fitness'))
-  print(pop_ord)
+    
+def roleta(pop_ord):
   soma_fitness = 0
   soma_roleta = 0
   for i in range(len(pop_ord)):
     soma_fitness  += pop_ord[i]['fitness'] 
   num_sort=random.randint(1, soma_fitness)
-  print(num_sort)
   for i in range(len(pop_ord)):
     soma_roleta  += pop_ord[i]['fitness']
     if soma_roleta >=  num_sort:
-      return pop_ord[i]
+      return i
       break
+  
+
+def selecao(pop):
+  
+  pop_ord = sorted(pop,key=itemgetter('fitness'))
+  pares = []
+  for i in range(len(pop)):
+    ind1 = roleta(pop_ord)
+    ind2 = roleta(pop_ord)
+    pares.append({'ind1': pop_ord[ind1], 'ind2':pop_ord[ind2]})
+  
+  return pares
+  
       
   
 def cruzamento(ind1, ind2):
@@ -71,6 +81,19 @@ def cruzamento(ind1, ind2):
 
   return { 'individuo': genes_filho, 'fitness': 0}       
   
+  def cruzamento_unicorte(ind1, ind2):
+  genes_filho = []
+
+  n = len( ind1['individuo'] )
+  
+  p = random.randint(0, n-1)
+  for i in range( n ):
+    if i <= p:
+      genes_filho.append( ind1['individuo'][i])
+    else:
+      genes_filho.append(ind2['individuo'][i])   
+
+  return { 'individuo': genes_filho, 'fitness': 0}
 
 
 pop = gerarPopulacao(3)
